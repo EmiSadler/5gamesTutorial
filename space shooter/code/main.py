@@ -23,7 +23,8 @@ star_positions = [(randint(0, WINDOW_WIDTH), randint(0, WINDOW_HEIGHT)) for _ in
 #imports
 player_surf = pygame.image.load(join('images', 'player.png')).convert_alpha()
 player_rect = player_surf.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
-player_direction = 1
+player_direction = pygame.math.Vector2(2, -1)
+player_speed = 10
 
 meteor_surf = pygame.image.load(join('images', 'meteor.png')).convert_alpha()
 meteor_rect = meteor_surf.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
@@ -33,7 +34,7 @@ laser_rect = laser_surf.get_frect(bottomleft = (20, WINDOW_HEIGHT - 20))
 
 # Game loop
 while running:
-    clock.tick(60)
+    clock.tick(24)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -46,9 +47,8 @@ while running:
     display_surface.blit(laser_surf, laser_rect)
     
     # player movement
-    player_rect.x += player_direction * 0.4
-    if player_rect.right > WINDOW_WIDTH or player_rect.left < 0:
-        player_direction *= -1
+    player_rect.center += player_direction * player_speed
+
     display_surface.blit(player_surf, player_rect)
     pygame.display.update()
 
