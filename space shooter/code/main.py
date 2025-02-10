@@ -47,17 +47,12 @@ while running:
     display_surface.blit(laser_surf, laser_rect)
     
     # player movement
-    if player_rect.bottom > WINDOW_HEIGHT:
+    if player_rect.bottom >= WINDOW_HEIGHT or player_rect.top <= 0:
         player_direction.y *= -1
-    if player_rect.right > WINDOW_WIDTH:
-        player_direction.x *= -1
-    if player_rect.top < 0:
-        player_direction.y *= -1
-    if player_rect.left < 0:
+    if player_rect.right >= WINDOW_WIDTH or player_rect.left <= 0:
         player_direction.x *= -1
     player_rect.center += player_direction * player_speed * dt
     
-
     display_surface.blit(player_surf, player_rect)
     pygame.display.update()
 
